@@ -16,6 +16,7 @@ namespace web_api.Controllers
     {
         private ILogger _logger;
         private IProductCategoryService _service;
+
         private DatabaseContext _context;
         private MySqlConnection MySqlDatabase { get; set; }
 

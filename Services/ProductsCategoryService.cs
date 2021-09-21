@@ -19,13 +19,13 @@ namespace web_api.Services
         public List<ProductCategory> GetProductCategories()
         {
             return _productCategory;
-        }        ProductCategory IProductCategoryService.AddProductCategory(ProductCategory productCategory)
+        }        public ProductCategory AddProductCategory(ProductCategory productCategory)
         {
             _productCategory.Add(productCategory);
             return productCategory;
         }
 
-        string IProductCategoryService.DeleteProductCategory(string id)
+        public string DeleteProductCategory(string id)
         {
             for (var index = _productCategory.Count - 1; index >= 0; index--)
             {
@@ -38,7 +38,7 @@ namespace web_api.Services
             return id;
         }
 
-        ProductCategory IProductCategoryService.UpdateProductCategory(string id, ProductCategory productCategory)
+        public ProductCategory UpdateProductCategory(string id, ProductCategory productCategory)
         {
             for (var index = _productCategory.Count - 1; index >= 0; index--)
             {
