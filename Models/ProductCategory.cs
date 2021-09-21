@@ -1,17 +1,24 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using web_api.Models;
 
 namespace web_api.Models
 {
-    public class ProductCategory
+    public class ProductCategory : DatabaseContext
     {
-        private DatabaseContext context;
+        public DatabaseContext context;
 
+        [Key]
         public int CategoryId { get; set; }
 
+        [Required]
+        [StringLength(100)]
         public string CategoryName { get; set; }
 
+        [Required]
+        [StringLength(200)]
         public string CategoryDescription { get; set; }
 
         public List<ProductCategory> GetAllProductCategories()
