@@ -12,7 +12,7 @@ namespace web_api.Controllers
 {
     [ApiController]
     [Route("ProductCategory/{action}")]
-    public class ProductCategoryController : Controller
+    public class ProductCategoryController : ControllerBase
     {
         private ILogger _logger;
         private IProductCategoryService _service;
@@ -20,39 +20,21 @@ namespace web_api.Controllers
         private DatabaseContext _context;
         private MySqlConnection MySqlDatabase { get; set; }
 
-        public ProductCategoryController(ILogger<ProductCategoryController> logger, IProductCategoryService service, DatabaseContext context)
+        public ProductCategoryController(ILogger<ProductCategoryController> logger, IProductCategoryService service)
         {
             _logger = logger;
             _service = service;
-            _context = context;
         }
 
         [HttpGet("/ProductCategory/index")]
-        public IActionResult Index()
+        public ActionResult<List<ProductCategory>> Index()
         {
-            ProductCategory context = HttpContext.RequestServices.GetService(typeof(web_api.Models.ProductCategory)) as ProductCategory;
-            
-            return View(_service.GetProductCategories());
+            return _service.GetProductCategories();
         }
 
-        //[HttpPost("/ProductCategory/index")]
-        //private IActionResult PartialViewResult(List<ProductCategory> productCategories)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        public string Get()
-        {
-            return "Returning from TestController Get Method";
-        }
-
-        public string Get2()
-        {
-            return "Returning from TestController Get2 Bryo Method";
-        }
 
         [HttpPost("/ProductCategory/add")]
-        public ActionResult<ProductCategory> AddProduct(ProductCategory ProductCategory)
+        public ActionResult<ProductCategory> AddProductCategory(ProductCategory ProductCategory)
         {
             _service.AddProductCategory(ProductCategory);
             return ProductCategory;
