@@ -38,7 +38,7 @@ namespace web_api.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        [Route("/ProductCategory/add")]
+        [Route("ProductCategory/add")]
         [ValidateAntiForgeryToken]
         public ActionResult<ProductCategory> AddProductCategory([FromForm] ProductCategory ProductCategory)
         {
@@ -70,7 +70,7 @@ namespace web_api.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        [Route("/ProductCategory/update/{id}")]
+        [Route("ProductCategory/update/{id}")]
         public ActionResult<ProductCategory> UpdateProductCategory(ProductCategory ProductCategory)
         {
             _service.UpdateProductCategory(ProductCategory);
@@ -79,7 +79,7 @@ namespace web_api.Controllers
 
         [HttpDelete]
         [Route("[action]")]
-        [Route("/ProductCategory/delete/{id}")]
+        [Route("ProductCategory/delete/{id}")]
         public ActionResult<string> DeleteProductCategory(int id)
         {
             var existingProductCategory= _service.GetProductCategory(id);
@@ -93,15 +93,15 @@ namespace web_api.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        [Route("/ProductCategory/details/{id}")]
-        public IEnumerable<ProductCategory> GetProductCategory(int id)
+        [Route("ProductCategory/details/{id}")]
+        public ActionResult GetProductCategory(int id)
         {
             var existingProductCategory = _service.GetProductCategory(id);
             if (existingProductCategory != null)
             {
-                return (IEnumerable<ProductCategory>)_service.GetProductCategory(existingProductCategory.CategoryId);
+                return View("Product Category Details", existingProductCategory);
             }
-            return (IEnumerable<ProductCategory>)NotFound($"Employee Not Found with ID : {existingProductCategory.CategoryId}");
+            return View("NotFound");
         }
     }
 }
