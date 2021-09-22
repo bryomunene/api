@@ -119,18 +119,6 @@ namespace web_api
 
                 endpoints.MapRazorPages();
 
-                    //endpoints.MapControllerRoute(
-                    //        name: "default",
-                    //        pattern: "{controller=Home}/{action=Index}/{id?}");
-
-
-                endpoints.MapGet("/", async context =>
-                        {
-                            await context.Response.WriteAsync("Hello From ASP.NET Core Web API");
-                        });
-
-                //endpoints.MapControllerRoute("default", "{controller=ProductCategory}/{action=Index}");
-
             });
 
             app.UseStaticFiles();

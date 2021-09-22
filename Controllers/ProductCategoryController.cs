@@ -28,11 +28,11 @@ namespace web_api.Controllers
         [HttpGet]
         [Route("[action]")]
         [Route("ProductCategory/index")]
-        public ActionResult Index()
+        public ActionResult index()
         {
             var prodCategory = _service.GetProductCategories().ToList();
 
-            return PartialView("index", prodCategory);
+            return View("index", prodCategory);
         }
 
 
