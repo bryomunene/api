@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using web_api.Models;
 
+
 namespace web_api.Models
 {
     [BindProperties(SupportsGet = true)]
@@ -16,11 +17,11 @@ namespace web_api.Models
         public int CategoryId { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [Display(Name = "Category Name")]
         public string CategoryName { get; set; }
 
         [Required]
-        [StringLength(200)]
+        [Display(Name = "Category Description")]
         public string CategoryDescription { get; set; }
 
         //public List<ProductCategory> GetAllProductCategories()

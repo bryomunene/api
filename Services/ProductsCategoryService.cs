@@ -19,7 +19,7 @@ namespace web_api.Services
         public List<ProductCategory> GetProductCategories()
         {
             return _databaseContext.productcategory.ToList();
-        }        public ProductCategory AddProductCategory(ProductCategory productCategory)
+        }        public ProductCategory AddProductCategory( ProductCategory productCategory)
         {
             _databaseContext.productcategory.Add(productCategory);
             _databaseContext.SaveChanges();

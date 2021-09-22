@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Catel.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MySql.Data.MySqlClient;
 using System;
@@ -16,8 +17,6 @@ namespace web_api.Controllers
     {
         private ILogger _logger;
         private readonly IProductCategoryService _service;
-
-        private DatabaseContext _context;
 
         public ProductCategoryController(ILogger<ProductCategoryController> logger, IProductCategoryService service)
         {
@@ -37,7 +36,7 @@ namespace web_api.Controllers
         [HttpPost]
         [Route("[action]")]
         [Route("/ProductCategory/add")]
-        public ActionResult<ProductCategory> AddProductCategory(ProductCategory ProductCategory)
+        public ActionResult<ProductCategory> AddProductCategory([FromForm] ProductCategory ProductCategory)
         {
             _service.AddProductCategory(ProductCategory);
             return Ok();
@@ -45,7 +44,7 @@ namespace web_api.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        [Route("/ProductCategory/{id}")]
+        [Route("/ProductCategory/update/{id}")]
         public ActionResult<ProductCategory> UpdateProductCategory(ProductCategory ProductCategory)
         {
             _service.UpdateProductCategory(ProductCategory);
@@ -54,7 +53,7 @@ namespace web_api.Controllers
 
         [HttpDelete]
         [Route("[action]")]
-        [Route("/ProductCategory/{id}")]
+        [Route("/ProductCategory/delete/{id}")]
         public ActionResult<string> DeleteProductCategory(int id)
         {
             var existingProductCategory= _service.GetProductCategory(id);

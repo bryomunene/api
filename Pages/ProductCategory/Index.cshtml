@@ -2,12 +2,17 @@
 @model web_api.Pages.ProductCategory.indexModel
 
 @{
-    ViewData["Title"] = "index";
-    Layout = "~/Pages/_Layout.cshtml";
+    Layout = null;
 }
 
-<h1>index</h1>
+<!DOCTYPE html>
 
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>index</title>
+</head>
+<body>
 <p>
     <a asp-page="Create">Create New</a>
 </p>
@@ -41,3 +46,5 @@
 }
     </tbody>
 </table>
+</body>
+</html>
