@@ -1,5 +1,6 @@
 ﻿@page
 @model web_api.Pages.ProductCategory.updateModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     Layout = null;
@@ -17,9 +18,19 @@
     <link rel="stylesheet" href="~/lib/bootstrap.min.css" />
 </environment>
 
-<body>
+<body style="margin:0 auto; width:90%">
+<div>
+    <br/>
+</div>
 
-<h4>ProductCategory</h4>
+<div style="margin:0 auto; width:85%"></div>
+
+<p style="float:right; margin-right:30px; top:-50px;">
+    <a asp-page="./Index">Category List</a>
+</p>
+
+<h5>Product Category Details</h5>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -43,9 +54,6 @@
     </div>
 </div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

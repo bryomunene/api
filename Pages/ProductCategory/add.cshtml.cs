@@ -40,7 +40,7 @@ namespace web_api.Pages.ProductCategory
             _context.productcategory.Add(ProductCategory);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("ProductCategory/index");
+            return RedirectToPage("./Index");
         }
     }
 }

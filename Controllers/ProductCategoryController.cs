@@ -59,6 +59,9 @@ namespace web_api.Controllers
                 }
 
                 _service.AddProductCategory(ProductCategory);
+
+                TempData["custdetails"] = string.Format("Product Category : {0}", ProductCategory.CategoryName, " successfully saved.");
+
                 return Ok();
             }
             catch(Exception)
@@ -68,7 +71,7 @@ namespace web_api.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPut("{id}")]
         [Route("[action]")]
         [Route("ProductCategory/update/{id}")]
         public ActionResult<ProductCategory> UpdateProductCategory(ProductCategory ProductCategory)
@@ -77,7 +80,7 @@ namespace web_api.Controllers
             return Ok();
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [Route("[action]")]
         [Route("ProductCategory/delete/{id}")]
         public ActionResult<string> DeleteProductCategory(int id)
@@ -88,10 +91,10 @@ namespace web_api.Controllers
                 _service.DeleteProductCategory(existingProductCategory.CategoryId);
                 return Ok();
             }
-            return NotFound($"Employee Not Found with ID : {existingProductCategory.CategoryId}");
+            return NotFound($"Product Category Not Found with ID : {existingProductCategory.CategoryId}");
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         [Route("[action]")]
         [Route("ProductCategory/details/{id}")]
         public ActionResult GetProductCategory(int id)

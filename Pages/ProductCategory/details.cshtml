@@ -1,5 +1,6 @@
 ﻿@page
 @model web_api.Pages.ProductCategory.detailsModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     Layout = null;
@@ -17,29 +18,43 @@
     <link rel="stylesheet" href="~/lib/bootstrap.min.css" />
 </environment>
 
-<body>
-
+<body style="margin: 0 auto; width:95%">
 <div>
-    <h4>ProductCategory</h4>
+    <br/>
+</div>
+<div style="margin:0 auto; width:90%">
+
+    <p style="float:right; top:-50px; margin-right:30px;">
+            <a asp-page="./Index">Category List</a>
+    </p>
+    <h5>Product Category Details</h5>
+
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.ProductCategory.CategoryId)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.ProductCategory.CategoryId)
+        </dd>
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.ProductCategory.CategoryName)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.ProductCategory.CategoryName)
         </dd>
-        <dt class="col-sm-2">
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.ProductCategory.CategoryDescription)
         </dt>
-        <dd class="col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.ProductCategory.CategoryDescription)
         </dd>
     </dl>
+
+    <div>
+    <a class="btn btn-info" asp-page="./Update" asp-route-id="@Model.ProductCategory.CategoryId">Update Category</a> 
 </div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.ProductCategory.CategoryId">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
 </div>
+
 </body>
 </html>
