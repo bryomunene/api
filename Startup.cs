@@ -18,6 +18,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Net;
 using System.Security.Authentication;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace web_api
 {
@@ -122,6 +124,14 @@ namespace web_api
             });
 
             app.UseStaticFiles();
+
+            // This will add "Libs" as another valid static content location
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                     Path.Combine(Directory.GetCurrentDirectory(), @"Lib")),
+                RequestPath = new PathString("/Lib")
+            });
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.  
             // Enable middleware to serve generated Swagger as a JSON endpoint.  
