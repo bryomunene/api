@@ -52,23 +52,12 @@ namespace web_api
 
             services.AddRazorPages();
 
-            //services.AddControllers();
-
             services.AddDbContextPool<DatabaseContext>(options => 
                 options.UseMySql(Configuration.GetConnectionString("DefaultConnection"),
                 mySqlOptionsAction: options => { options.EnableRetryOnFailure(); }
                 ));
 
             services.AddScoped<IProductCategoryService, ProductsCategoryService>();
-
-
-            //services.AddControllers(options => options.EnableEndpointRouting = false);
-
-            // Add framework services.  
-            //services.AddMvc().AddRazorPagesOptions(options =>
-            //{
-            //    options.Conventions.AddPageRoute("/ProductCategory/Index", "");
-            //});
 
             services.Configure<HtmlHelperOptions>(o => o.ClientValidationEnabled = true);
 
