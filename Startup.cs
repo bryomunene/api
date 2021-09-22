@@ -17,6 +17,7 @@ using web_api.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 using System.Security.Authentication;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace web_api
 {
@@ -62,12 +63,26 @@ namespace web_api
             //services.AddControllers(options => options.EnableEndpointRouting = false);
 
             // Add framework services.  
-            services.AddMvc().AddRazorPagesOptions(options =>
+            //services.AddMvc().AddRazorPagesOptions(options =>
+            //{
+            //    options.Conventions.AddPageRoute("/ProductCategory/Index", "");
+            //});
+
+            services.Configure<HtmlHelperOptions>(o => o.ClientValidationEnabled = true);
+
+            services.Configure<ApiBehaviorOptions>(options =>
             {
-                options.Conventions.AddPageRoute("/ProductCategory/Index", "");
+                options.InvalidModelStateResponseFactory = context =>
+                {
+                    var result = new BadRequestObjectResult(context.ModelState);
+                    result.ContentTypes.Clear();
+                    result.ContentTypes.Add("application/vnd.error+json");
+
+                    return result;
+                };
             });
 
-            
+
 
             // Register the Swagger generator, defining 1 or more Swagger documents  
             services.AddSwaggerGen();

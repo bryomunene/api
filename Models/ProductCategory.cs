@@ -14,6 +14,7 @@ namespace web_api.Models
         public DatabaseContext context;
 
         [Key]
+        [Required]
         public int CategoryId { get; set; }
 
         [Required]
@@ -22,6 +23,7 @@ namespace web_api.Models
 
         [Required]
         [Display(Name = "Category Description")]
+
         public string CategoryDescription { get; set; }
 
         //public List<ProductCategory> GetAllProductCategories()

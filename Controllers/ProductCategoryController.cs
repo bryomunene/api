@@ -1,4 +1,5 @@
 ﻿using Catel.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MySql.Data.MySqlClient;
@@ -13,7 +14,7 @@ namespace web_api.Controllers
 {
     [ApiController]
     [Route("ProductCategory/{action}")]
-    public class ProductCategoryController : ControllerBase
+    public class ProductCategoryController : Controller
     {
         private ILogger _logger;
         private readonly IProductCategoryService _service;
@@ -26,20 +27,45 @@ namespace web_api.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        [Route("/ProductCategory/index")]
-        public IEnumerable<ProductCategory> Index()
+        [Route("ProductCategory/index")]
+        public ActionResult Index()
         {
-            return _service.GetProductCategories();
+            var prodCategory = _service.GetProductCategories().ToList();
+
+            return PartialView("index", prodCategory);
         }
 
 
         [HttpPost]
         [Route("[action]")]
         [Route("/ProductCategory/add")]
+        [ValidateAntiForgeryToken]
         public ActionResult<ProductCategory> AddProductCategory([FromForm] ProductCategory ProductCategory)
         {
-            _service.AddProductCategory(ProductCategory);
-            return Ok();
+            try
+            {
+                if (ProductCategory == null)
+                {
+                    return BadRequest();
+                }
+
+                // Add custom model validation error
+                var prodCat = _service.GetProductCategory(ProductCategory.CategoryId);
+
+                if (prodCat != null)
+                {
+                    ModelState.AddModelError("Category ID", "Product Category already in use");
+                    return BadRequest(ModelState);
+                }
+
+                _service.AddProductCategory(ProductCategory);
+                return Ok();
+            }
+            catch(Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retrieving data from the database");
+            }
+
         }
 
         [HttpPost]
@@ -63,6 +89,19 @@ namespace web_api.Controllers
                 return Ok();
             }
             return NotFound($"Employee Not Found with ID : {existingProductCategory.CategoryId}");
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        [Route("/ProductCategory/details/{id}")]
+        public IEnumerable<ProductCategory> GetProductCategory(int id)
+        {
+            var existingProductCategory = _service.GetProductCategory(id);
+            if (existingProductCategory != null)
+            {
+                return (IEnumerable<ProductCategory>)_service.GetProductCategory(existingProductCategory.CategoryId);
+            }
+            return (IEnumerable<ProductCategory>)NotFound($"Employee Not Found with ID : {existingProductCategory.CategoryId}");
         }
     }
 }
