@@ -1,36 +1,40 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using web_api.Models;
 
 namespace web_api.Models
 {
-    public class DatabaseContext : DbContext
+    public class DatabaseContext : Microsoft.EntityFrameworkCore.DbContext
     {
-        public MySqlConnection Connection;
+        //public MySqlConnection Connection;
 
-        public void Dispose()
+        public DatabaseContext(Microsoft.EntityFrameworkCore.DbContextOptions<DatabaseContext> options) : base(options)
         {
-            Connection.Close();
+
         }
 
-        public DbSet ProductCategory { get; set; }
-        public string ConnectionString { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<ProductCategory> productcategory { get; set; }
 
-        public DatabaseContext(string connectionString)
-        {
-            this.ConnectionString = connectionString;
-        }
+        //public string ConnectionString { get; set; }
 
-        public MySqlConnection GetConnection()
-        {
-            return new MySqlConnection(ConnectionString);
-        }
+        //public DatabaseContext(string connectionString)
+        //{
+        //    this.ConnectionString = connectionString;
+        //}
 
-        public  DatabaseContext() : base("DefaultConnection") //Connection string name write here  
-        { }  
+        //public MySqlConnection GetConnection()
+        //{
+        //    return new MySqlConnection(ConnectionString);
+        //}
+
+        //public void Dispose()
+        //{
+        //    Connection.Close();
+        //}
 
     }
 }

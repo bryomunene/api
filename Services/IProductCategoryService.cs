@@ -8,12 +8,14 @@ namespace web_api.Services
 {
     public interface IProductCategoryService
     {
-        public List<ProductCategory> GetProductCategories();
+        List<ProductCategory> GetProductCategories();
 
-        public ProductCategory AddProductCategory(ProductCategory productCategory);
+        ProductCategory GetProductCategory(int id);
 
-        public ProductCategory UpdateProductCategory(string id, ProductCategory productCategory);
+        ProductCategory AddProductCategory(ProductCategory productCategory);
 
-        public string DeleteProductCategory(string id);
+        void UpdateProductCategory(ProductCategory productCategory);
+
+        void DeleteProductCategory(int id);
     }
 }

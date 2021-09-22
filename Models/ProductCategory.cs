@@ -6,7 +6,7 @@ using web_api.Models;
 
 namespace web_api.Models
 {
-    public class ProductCategory : DatabaseContext
+    public class ProductCategory 
     {
         public DatabaseContext context;
 
@@ -21,32 +21,32 @@ namespace web_api.Models
         [StringLength(200)]
         public string CategoryDescription { get; set; }
 
-        public List<ProductCategory> GetAllProductCategories()
-        {
-            List<ProductCategory> list = new List<ProductCategory>();
+        //public List<ProductCategory> GetAllProductCategories()
+        //{
+        //    List<ProductCategory> list = new List<ProductCategory>();
 
-            using (MySqlConnection conn = context.GetConnection())
-            {
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand("select * from web_api.productcategory", conn);
+        //    using (MySqlConnection conn = context.GetConnection())
+        //    {
+        //        conn.Open();
+        //        MySqlCommand cmd = new MySqlCommand("select * from web_api.productcategory", conn);
 
-                using (var reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        list.Add(new ProductCategory()
-                        {
-                            CategoryId = Convert.ToInt32(reader["CategoryId"]),
-                            CategoryName = reader["CategoryName"].ToString(),
-                            CategoryDescription = reader["CategoryDescription"].ToString()
-                            //Price = Convert.ToInt32(reader["Price"]),
-                            //Genre = reader["genre"].ToString()
-                        });
-                    }
-                }
-            }
-            return list;
-        }
+        //        using (var reader = cmd.ExecuteReader())
+        //        {
+        //            while (reader.Read())
+        //            {
+        //                list.Add(new ProductCategory()
+        //                {
+        //                    CategoryId = Convert.ToInt32(reader["CategoryId"]),
+        //                    CategoryName = reader["CategoryName"].ToString(),
+        //                    CategoryDescription = reader["CategoryDescription"].ToString()
+        //                    //Price = Convert.ToInt32(reader["Price"]),
+        //                    //Genre = reader["genre"].ToString()
+        //                });
+        //            }
+        //        }
+        //    }
+        //    return list;
+        //}
 
     }
 }

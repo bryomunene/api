@@ -3,18 +3,20 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using MySql.Data.EntityFrameworkCore.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using web_api.Models;
 using web_api.Services;
-
+using Microsoft.EntityFrameworkCore;
+using System.Net;
+using System.Security.Authentication;
 
 namespace web_api
 {
@@ -39,18 +41,21 @@ namespace web_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
 
-            //services.AddDbContext<DatabaseContext>(options =>
-            //    options.UseMySQL(
-            //        Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddTransient<MySqlConnection>(_ => new MySqlConnection(Configuration["ConnectionStrings:DefaultConnection"]));
-
-            services.Add(new ServiceDescriptor(typeof(DatabaseContext), new DatabaseContext(Configuration.GetConnectionString("DefaultConnection"))));
+            ServicePointManager.SecurityProtocol = (SecurityProtocolType)(SslProtocols.Tls12 | SslProtocols.Tls11 | SslProtocols.Tls );
 
             services.AddRazorPages();
 
             services.AddControllers();
+
+            services.AddDbContextPool<DatabaseContext>(options => 
+                options.UseMySql(Configuration.GetConnectionString("DefaultConnection"),
+                mySqlOptionsAction: options => { options.EnableRetryOnFailure(); }
+                ));
+
+            services.AddScoped<IProductCategoryService, ProductsCategoryService>();
+
 
             //services.AddControllers(options => options.EnableEndpointRouting = false);
 
@@ -61,12 +66,6 @@ namespace web_api
             });
 
             services.AddControllersWithViews();
-
-            //services.AddTransient<IProductCategoryService, UserService>();
-
-            //services.AddScoped<IProductCategoryService, ProductsCategoryService>();
-
-            services.AddSingleton<IProductCategoryService, ProductsCategoryService>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents  
             services.AddSwaggerGen();

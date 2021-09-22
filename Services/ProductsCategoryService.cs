@@ -9,45 +9,42 @@ namespace web_api.Services
 {
     public class ProductsCategoryService : IProductCategoryService
     {
-        private List<ProductCategory> _productCategory;
+        public DatabaseContext _databaseContext;
 
-        public ProductsCategoryService()
+        public ProductsCategoryService(DatabaseContext databaseContext)
         {
-            _productCategory = new List<ProductCategory>();
+            _databaseContext = databaseContext;
         }
 
         public List<ProductCategory> GetProductCategories()
         {
-            return _productCategory;
+            return _databaseContext.productcategory.ToList();
         }        public ProductCategory AddProductCategory(ProductCategory productCategory)
         {
-            _productCategory.Add(productCategory);
+            _databaseContext.productcategory.Add(productCategory);
+            _databaseContext.SaveChanges();
             return productCategory;
         }
 
-        public string DeleteProductCategory(string id)
+        void IProductCategoryService.DeleteProductCategory(int Id)
         {
-            for (var index = _productCategory.Count - 1; index >= 0; index--)
+            var employee = _databaseContext.productcategory.FirstOrDefault(x => x.CategoryId == Id);
+            if (employee != null)
             {
-                if (_productCategory[index].CategoryId == Convert.ToInt32(id))
-                {
-                    _productCategory.RemoveAt(index);
-                }
+                _databaseContext.Remove(employee);
+                _databaseContext.SaveChanges();
             }
-
-            return id;
         }
 
-        public ProductCategory UpdateProductCategory(string id, ProductCategory productCategory)
+        void IProductCategoryService.UpdateProductCategory(ProductCategory productCategory)
         {
-            for (var index = _productCategory.Count - 1; index >= 0; index--)
-            {
-                if (_productCategory[index].CategoryId == Convert.ToInt32(id))
-                {
-                    _productCategory[index] = productCategory;
-                }
-            }
-            return productCategory;
+            _databaseContext.productcategory.Update(productCategory);
+            _databaseContext.SaveChanges();
+        }
+
+        public ProductCategory GetProductCategory(int Id)
+        {
+            return _databaseContext.productcategory.FirstOrDefault(x => x.CategoryId == Id);
         }
     }
 }

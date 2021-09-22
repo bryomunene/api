@@ -12,13 +12,12 @@ namespace web_api.Controllers
 {
     [ApiController]
     [Route("ProductCategory/{action}")]
-    public class ProductCategoryController : ControllerBase
+    public class ProductCategoryController : Controller
     {
         private ILogger _logger;
-        private IProductCategoryService _service;
+        private readonly IProductCategoryService _service;
 
         private DatabaseContext _context;
-        private MySqlConnection MySqlDatabase { get; set; }
 
         public ProductCategoryController(ILogger<ProductCategoryController> logger, IProductCategoryService service)
         {
@@ -26,33 +25,45 @@ namespace web_api.Controllers
             _service = service;
         }
 
-        [HttpGet("/ProductCategory/index")]
-        public ActionResult<List<ProductCategory>> Index()
+        [HttpGet]
+        [Route("[action]")]
+        [Route("/ProductCategory/index")]
+        public IEnumerable<ProductCategory> Index()
         {
             return _service.GetProductCategories();
         }
 
 
-        [HttpPost("/ProductCategory/add")]
+        [HttpPost]
+        [Route("[action]")]
+        [Route("/ProductCategory/add")]
         public ActionResult<ProductCategory> AddProductCategory(ProductCategory ProductCategory)
         {
             _service.AddProductCategory(ProductCategory);
-            return ProductCategory;
+            return Ok();
         }
 
-        [HttpPut("/ProductCategory/{id}")]
-        public ActionResult<ProductCategory> UpdateProductCategory(string id, ProductCategory ProductCategory)
+        [HttpPost]
+        [Route("[action]")]
+        [Route("/ProductCategory/{id}")]
+        public ActionResult<ProductCategory> UpdateProductCategory(ProductCategory ProductCategory)
         {
-            _service.UpdateProductCategory(id, ProductCategory);
-            return ProductCategory;
+            _service.UpdateProductCategory(ProductCategory);
+            return Ok();
         }
 
-        [HttpDelete("/ProductCategory/{id}")]
-        public ActionResult<string> DeleteProductCategory(string id)
+        [HttpDelete]
+        [Route("[action]")]
+        [Route("/ProductCategory/{id}")]
+        public ActionResult<string> DeleteProductCategory(int id)
         {
-            _service.DeleteProductCategory(id);
-            //_logger.LogInformation("products", _products);
-            return id;
+            var existingProductCategory= _service.GetProductCategory(id);
+            if (existingProductCategory != null)
+            {
+                _service.DeleteProductCategory(existingProductCategory.CategoryId);
+                return Ok();
+            }
+            return NotFound($"Employee Not Found with ID : {existingProductCategory.CategoryId}");
         }
     }
 }
