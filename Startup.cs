@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using MySql.Data.EntityFrameworkCore.Extensions;
+//using MySql.Data.EntityFrameworkCore.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -45,9 +45,11 @@ namespace web_api
 
             ServicePointManager.SecurityProtocol = (SecurityProtocolType)(SslProtocols.Tls12 | SslProtocols.Tls11 | SslProtocols.Tls );
 
+            services.AddControllersWithViews();
+
             services.AddRazorPages();
 
-            services.AddControllers();
+            //services.AddControllers();
 
             services.AddDbContextPool<DatabaseContext>(options => 
                 options.UseMySql(Configuration.GetConnectionString("DefaultConnection"),
@@ -65,7 +67,7 @@ namespace web_api
                 options.Conventions.AddPageRoute("/ProductCategory/Index", "");
             });
 
-            services.AddControllersWithViews();
+            
 
             // Register the Swagger generator, defining 1 or more Swagger documents  
             services.AddSwaggerGen();
@@ -98,24 +100,21 @@ namespace web_api
             app.UseEndpoints(endpoints =>
             {
 
-            endpoints.MapControllers();
+                endpoints.MapControllers();
 
-            endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-            
+                endpoints.MapRazorPages();
 
-            endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello From ASP.NET Core Web API");
-                });
+                    //endpoints.MapControllerRoute(
+                    //        name: "default",
+                    //        pattern: "{controller=Home}/{action=Index}/{id?}");
 
-            endpoints.MapGet("/Resource1", async context =>
-                {
-                    await context.Response.WriteAsync("Hello From ASP.NET Core Web API Resource1");          
-            });
 
-            endpoints.MapControllerRoute("default", "{controller=ProductCategory}/{action=Index}");
+                endpoints.MapGet("/", async context =>
+                        {
+                            await context.Response.WriteAsync("Hello From ASP.NET Core Web API");
+                        });
+
+                //endpoints.MapControllerRoute("default", "{controller=ProductCategory}/{action=Index}");
 
             });
 

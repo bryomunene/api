@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.AspNetCore.Mvc;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,6 +7,7 @@ using web_api.Models;
 
 namespace web_api.Models
 {
+    [BindProperties(SupportsGet = true)]
     public class ProductCategory 
     {
         public DatabaseContext context;

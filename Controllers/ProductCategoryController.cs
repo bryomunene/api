@@ -12,7 +12,7 @@ namespace web_api.Controllers
 {
     [ApiController]
     [Route("ProductCategory/{action}")]
-    public class ProductCategoryController : Controller
+    public class ProductCategoryController : ControllerBase
     {
         private ILogger _logger;
         private readonly IProductCategoryService _service;

@@ -1,36 +1,31 @@
 ﻿@page
-@model IEnumerable<web_api.Models.ProductCategory>
+@model web_api.Pages.ProductCategory.indexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "index";
+    Layout = "~/Pages/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-page="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.CategoryId)
+                @Html.DisplayNameFor(model => model.ProductCategory[0].CategoryName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CategoryName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CategoryDescription)
+                @Html.DisplayNameFor(model => model.ProductCategory[0].CategoryDescription)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.ProductCategory) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoryId)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CategoryName)
             </td>
@@ -38,9 +33,9 @@
                 @Html.DisplayFor(modelItem => item.CategoryDescription)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <a asp-page="./Edit" asp-route-id="@item.CategoryId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.CategoryId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.CategoryId">Delete</a>
             </td>
         </tr>
 }
