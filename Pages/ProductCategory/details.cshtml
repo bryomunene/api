@@ -52,8 +52,14 @@
     </dl>
 
     <div>
-    <a class="btn btn-info" asp-page="./Update" asp-route-id="@Model.ProductCategory.CategoryId">Update Category</a> 
-</div>
+        <br/>
+    </div>
+  <hr />
+  <p style="float:right; margin-right:30px;">
+      @Html.ActionLink("Add Product", "add", "Product", new { id = HttpContext.Request.Query["id"] }, new { @class = "btn btn-info", data_val="abc" })
+  </p>
+        <h5> @Html.DisplayFor(model => model.ProductCategory.CategoryName) Product List </h5>
+    <hr />
 </div>
 
 </body>
