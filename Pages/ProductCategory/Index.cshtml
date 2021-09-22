@@ -1,5 +1,6 @@
 ﻿@page
 @model web_api.Pages.ProductCategory.indexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     Layout = null;
@@ -17,13 +18,29 @@
     <link rel="stylesheet" href="~/lib/bootstrap.min.css" />
 </environment>
 
-<body>
+<style type="text/css">
+    tr:nth-child(even) 
+    {
+        background-color: #f2f2f2;
+    }
+</style>
+
+<body style="margin: 0 auto; width:90%">
+
 <p>
-    <a asp-page="Create">Create New</a>
+    <br/>
 </p>
-<table class="table">
+<div style="margin: 0 auto; width:90%">
+    
+<p>
+    <a asp-page="/ProductCategory/add"> New Category</a>
+</p>
+<table class="table table-stripped">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductCategory[0].CategoryId)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.ProductCategory[0].CategoryName)
             </th>
@@ -51,5 +68,6 @@
 }
     </tbody>
 </table>
+</div>
 </body>
 </html>

@@ -15,6 +15,7 @@ namespace web_api.Models
 
         [Key]
         [Required]
+        [Display(Name = "Category ID")]
         public int CategoryId { get; set; }
 
         [Required]
