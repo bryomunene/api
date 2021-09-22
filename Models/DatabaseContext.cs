@@ -19,22 +19,5 @@ namespace web_api.Models
 
         public Microsoft.EntityFrameworkCore.DbSet<ProductCategory> productcategory { get; set; }
 
-        //public string ConnectionString { get; set; }
-
-        //public DatabaseContext(string connectionString)
-        //{
-        //    this.ConnectionString = connectionString;
-        //}
-
-        //public MySqlConnection GetConnection()
-        //{
-        //    return new MySqlConnection(ConnectionString);
-        //}
-
-        //public void Dispose()
-        //{
-        //    Connection.Close();
-        //}
-
     }
 }
